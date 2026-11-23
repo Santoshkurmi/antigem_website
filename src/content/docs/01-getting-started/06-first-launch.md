@@ -93,6 +93,8 @@ Next: [Your first chat](./07-first-chat.md) walks you through installing one age
 
 If a newer version is out, a **New Update Available** dialog can appear on launch, with what's new. Tap **Update** to download and install it, or **Later**. A **Critical Release** can't be skipped. See [Updating and uninstalling](./09-updating-and-uninstalling.md).
 
+![The New Update Available dialog, with what's new](/screens/update_dialog.webp "frame")
+
 ## Troubleshooting
 
 :::details The download fails or stops

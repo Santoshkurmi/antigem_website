@@ -81,7 +81,7 @@ See [Appearance](../06-settings/03-appearance.md).
 
 **Gemmy** is the little purple buddy who floats over the app. Gemmy has no job: it is there for fun, and to show at a glance whether your agent is working.
 
-![Gemmy floating over the chat, thinking with a glowing antenna while the agent works](/screens/gemmy_working.webp "frame")
+![Gemmy floating over the chat, watching while the agent works](/screens/gemmy_working.webp "frame")
 
 ### Meet Gemmy
 

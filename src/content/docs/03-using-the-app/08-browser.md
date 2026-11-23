@@ -8,7 +8,7 @@ AntiGem has its own browser. Use it to look things up, to test the website or we
 
 **Where:** the floating switcher → **Browser** (the globe icon).
 
-![The browser on a local dev server: the address bar with the Local server badge on top, the page, and the bottom bar with Back, Forward, Home, the tab counter and More options](/screens/browser_local_server.webp "frame")
+![The browser on a local dev server: the address bar on top, the page, and the bottom bar with Back, Forward, Home, the tab counter and More options](/screens/browser_live_preview.webp "phone")
 
 ## The address bar
 

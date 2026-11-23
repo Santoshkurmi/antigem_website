@@ -9,7 +9,7 @@ Every chat you have with any agent is kept in the drawer. From there you can ope
 
 **Where:** on the Chat screen, tap **☰** (top left), or swipe right from the left edge of the screen.
 
-![The drawer: the header icons, the agent filters, the chat list with a running chat, and the bottom bar with Settings, Themes, Mini Apps and the accounts button](/screens/drawer_chat_list.webp "frame")
+![The drawer: the header icons, the agent filters, a chat, and the bottom bar with Settings, Themes, Mini Apps and the accounts button](/screens/drawer_chat_list.webp "frame")
 
 ## The drawer header
 

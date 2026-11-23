@@ -20,6 +20,8 @@ AntiGem has a light theme and a dark theme in use at any time, and a mode that p
 
 ## Picking themes
 
+![The Themes page in light mode: the Color Theme switch and the light theme gallery](/screens/themes_light.webp "phone")
+
 Below the mode, the gallery has two lists:
 
 - **Light theme**: used in Light mode, and by Auto when the system is light.

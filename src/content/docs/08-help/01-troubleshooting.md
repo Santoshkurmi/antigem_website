@@ -41,7 +41,7 @@ The setup screen comes back the next time you open AntiGem, and opening the term
 ## Agents
 
 :::details The agent says "not installed" or "not found"
-Tap **Install** (or **Set up Claude Code**) on the empty chat, or install it from its page in **Settings**. See the agent's page: [Antigravity](../02-agents/02-antigravity.md), [Claude Code](../02-agents/03-claude-code.md), [OpenCode](../02-agents/04-opencode.md), [Codex](../02-agents/05-codex.md).
+Tap **Install** (or **Set up Claude Code**) on the empty chat, or install it from its page in **Settings**. Don't install agents with their official commands in the terminal: on the phone they need setup that only the app's installer does. See the agent's page: [Antigravity](../02-agents/02-antigravity.md), [Claude Code](../02-agents/03-claude-code.md), [OpenCode](../02-agents/04-opencode.md), [Codex](../02-agents/05-codex.md).
 :::
 
 :::details Signing in doesn't come back to the app

@@ -8,7 +8,7 @@ The terminal is a full Linux shell on your phone, the same one the agents use. I
 
 **Where:** the floating switcher → **Terminal** (the `>_` icon). Also: the IDE sidebar's **Terminal** button (opens in the project folder), or the separate terminal icon on your home screen if you turned it on.
 
-![The terminal full screen: the session pill at the top right, and the two rows of extra keys above the keyboard](/screens/terminal_sessions.webp "frame")
+![The terminal full screen: the session pill at the top right, and the two rows of extra keys at the bottom](/screens/terminal_fastfetch.webp "phone")
 
 ## Before you start
 
@@ -82,6 +82,9 @@ pkg uninstall nodejs
 
 > [!TIP]
 > Language tools work as usual once installed: `pip install` for Python packages, `npm install -g` for Node.js tools, `cargo` for Rust.
+
+> [!IMPORTANT]
+> Install the coding agents themselves (Antigravity, Claude Code, OpenCode, Codex) with their **Install** buttons in **Settings**, not with their official install commands in the terminal. On the phone they need setup that only the app's installer does, so a terminal install doesn't work.
 
 ## Phone storage
 

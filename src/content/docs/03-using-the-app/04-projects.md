@@ -26,7 +26,7 @@ Tap **Select Project** at the top of a new chat. The **Select Workspace** list o
 
 Tap a project. The one in use is marked **Active**. The list closes and the chip shows the project's name.
 
-![The Select Workspace list: General (No Workspace), a few projects with their paths, and the two buttons at the bottom](/screens/chat_project_picker.webp "frame")
+![The Select Workspace list: General (No Workspace), a project with its path, and the Use Git Repository… and Browse or Open Other Folder… buttons](/screens/chat_project_picker.webp "frame")
 
 ### Send your first message
 

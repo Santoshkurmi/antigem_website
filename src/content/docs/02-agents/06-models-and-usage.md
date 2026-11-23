@@ -35,7 +35,7 @@ The picker looks alike for every agent, but each agent fills it differently:
 
 The model you pick applies to the chat.
 
-![The Antigravity model picker: quota groups with their meters, and Low / Medium / High per model](/screens/model_picker.webp "frame")
+![The model picker (here Claude Code): the 5-hour and weekly usage meters, and the models to pick from](/screens/model_picker_usage.webp "phone")
 
 ### Shown in chat
 

@@ -120,16 +120,28 @@ After the app reopens, it connects over SSH and starts the bridge in a tmux sess
 
 ### Install the agents on the server
 
-Open each agent's settings page and install it there, like on the phone. The app runs the installer on the server:
+Open each agent's settings page and tap its install button, like on the phone. The app runs the installer on the server and sets the agent up for the bridge. **Use these buttons**:
 
-| Agent | In the app | Or on the server |
-| :--- | :--- | :--- |
-| Antigravity | **Settings → Antigravity → Account & CLI → Install agy** | `curl -fsSL https://antigravity.google/cli/install.sh \| bash` |
-| Claude Code | **Settings → Claude Code → Account & CLI → Install Claude Code** | `curl -fsSL https://claude.ai/install.sh \| bash` |
-| OpenCode | **Settings → OpenCode → OpenCode CLI → Install OpenCode** | `curl -fsSL https://opencode.ai/v2/install \| bash` |
-| Codex | **Settings → Codex → Account & CLI → Install Codex** (OpenAI's official Linux build into `~/.local/bin`) | – |
+| Agent | In the app |
+| :--- | :--- |
+| Antigravity | **Settings → Antigravity → Account & CLI → Install agy** |
+| Claude Code | **Settings → Claude Code → Account & CLI → Install Claude Code** |
+| OpenCode | **Settings → OpenCode → OpenCode CLI → Install OpenCode** |
+| Codex | **Settings → Codex → Account & CLI → Install Codex** (OpenAI's official Linux build into `~/.local/bin`) |
 
-Install them as the AntiGem user, in its home. The bridge also starts without them, so you can install them later.
+The bridge also starts without them, so you can install them later. Update them from the same pages.
+
+:::details Only if the in-app install fails on your server
+On a normal Linux server (not the phone), the vendors' own installers also work. Run them as the AntiGem user, in its home, then tap **Refresh** or **Restart** on the agent's page:
+
+```bash title="On the server"
+curl -fsSL https://antigravity.google/cli/install.sh | bash   # Antigravity (agy)
+curl -fsSL https://claude.ai/install.sh | bash                # Claude Code
+curl -fsSL https://opencode.ai/v2/install | bash              # OpenCode
+```
+
+Never run these in AntiGem's own terminal on the phone: there the agents need setup that only the app's installer does.
+:::
 
 ### Sign in
 

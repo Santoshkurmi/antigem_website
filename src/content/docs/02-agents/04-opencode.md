@@ -53,11 +53,8 @@ Shows OpenCode's state, version and whether the **server running**, plus where t
 - **Check for updates** installs a newer OpenCode if there is one.
 - **Restart OpenCode** (or **Start OpenCode** when it isn't running) starts it again. Replies that are running stop.
 
-While OpenCode isn't installed, the page also shows the official install command, to run in a terminal on the server:
-
-```bash title="Terminal"
-curl -fsSL https://opencode.ai/v2/install | bash
-```
+> [!IMPORTANT]
+> Always install and update OpenCode with the app's **Install** / **Check for updates** buttons. The app's installer sets OpenCode up so it runs on the phone (it needs glibc and other setup that AntiGem does for it). OpenCode's official install command (the grey `curl …` line the page shows while OpenCode isn't installed) doesn't work in AntiGem's own terminal.
 
 ## Permissions
 

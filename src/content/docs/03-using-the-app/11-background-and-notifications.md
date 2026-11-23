@@ -29,7 +29,7 @@ The service starts when you allow notifications. That's why the first-launch scr
 
 AntiGem's notification is titled **AntiGem**. Its text counts your terminal sessions and running commands, for example **2 sessions · 1 running**, and adds **(wake lock held)** while a wake lock is on. Tap it to open the app.
 
-![AntiGem's notification, expanded, with the Exit, Acquire wakelock and Float buttons](/screens/notification_service.webp "frame")
+![AntiGem's notification, expanded, with the Exit, Acquire wakelock and Float buttons](/screens/notification_service.webp)
 
 Expand it to see three buttons:
 

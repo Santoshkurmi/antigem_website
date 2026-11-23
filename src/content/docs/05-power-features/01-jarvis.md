@@ -51,6 +51,8 @@ To use Jarvis with the screen off or from other apps, turn on **Hands-free mode*
 
 ## Settings → Jarvis
 
+![Settings → Jarvis: Turn on Jarvis, Floating button & voice, and the rows for each Jarvis page](/screens/jarvis_settings.webp "phone")
+
 ### Turn on Jarvis
 
 Turns Jarvis on or off. **Default:** off.

@@ -30,7 +30,7 @@ To start over at any time, tap **New chat** (top right). Your old chats stay in 
 
 The rounded box at the bottom. The text field is on top. The row under it has, from left to right: **+**, the model chip, the voice buttons, and the send button. The placeholder text says who you are talking to, for example "Reply to Claude...".
 
-![The message box with an image attached, the model chip with its usage badge, and the voice buttons](/screens/chat_input_bar.webp "frame")
+![The message box: + for attachments, the model chip with its usage badge, and the voice buttons](/screens/chat_input_bar.webp)
 
 ### Add attachments (+)
 
@@ -121,6 +121,8 @@ Each waiting message has two buttons:
 
 ## The conversation
 
+![A finished reply: the folded steps (Worked 17s · 3 tool calls), the answer with links to the files, the message stats and the actions under it](/screens/chat_reply.webp "frame")
+
 ### Your messages
 
 Tap one of your messages to show its actions under it:
@@ -149,6 +151,8 @@ Above these buttons, a line of message stats shows the tokens in and out, the ca
 When the model thinks before answering, a fold-out shows **Thinking...** while it thinks, then **Thought for 12s**. Tap it to read the thoughts, tap again to fold them away.
 
 ### Tool cards
+
+![The steps opened: thinking, two Read file cards and a Ran bash card with its command, exit code and output](/screens/chat_tool_cards.webp "frame")
 
 Every action the agent takes is a card: **Ran bash**, **Read file**, **Edited file**, **Listed directory**, **Searched code**, **Web search**, **Read page**, **Generated image**, **MCP tool** and so on. While it runs, the card says what is happening ("Editing file...", "Searching web..."). A card that went wrong says **Failed:**, **Rejected:** or **Stopped:**. Commands show their exit code (`exit 1`) and how long they took.
 

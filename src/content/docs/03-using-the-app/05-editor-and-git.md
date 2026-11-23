@@ -8,7 +8,7 @@ The **IDE** is AntiGem's code editor. Open the project's files, change them, run
 
 **Where:** the floating switcher → **IDE** (the `</>` icon). Or tap a text file's path in a chat.
 
-![The IDE with a Python file open: the toolbar on top, a tab row under it, and line numbers](/screens/ide_toolbar.webp "frame")
+![The IDE with a file open: the toolbar on top, the tab row under it, and line numbers](/screens/code_editor.webp "phone")
 
 ## The toolbar
 

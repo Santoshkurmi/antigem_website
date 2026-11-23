@@ -58,7 +58,7 @@ Stay in Settings while you do this: Android closes the pairing dialog as soon as
 Tap **Connect**. Leave **Port** empty (**Auto**): AntiGem finds it on this phone. **IP** is `localhost` for this phone. For another device on your Wi-Fi, enter its IP and port. **Disconnect** ends all connections.
 :::
 
-![ADB Connect: the How AntiGem reaches this phone picker, and the four ADB steps with the Connect step done](/screens/settings_adb_connect.webp "frame")
+![ADB Connect: the How AntiGem reaches this phone picker, and the first ADB steps](/screens/settings_adb_connect.webp "frame")
 
 ### The pairing notification
 

@@ -18,17 +18,17 @@ A Linux server with a normal user, `sshd`, `tmux` and `git`. You'll log in with 
 
 The app doesn't contain the server's bridge and never uploads anything. Build `agy_ide_bridge` once with Go for the server's processor (amd64 or arm64), from the **same version as your app**, copy it to `~/.antigem/agy_ide_bridge` on the server and make it executable (`chmod +x`). See [Server mode](../05-power-features/02-server-mode.md) for the exact commands.
 
-### Install the agents on the server
-
-For example Antigravity (`curl -fsSL https://antigravity.google/cli/install.sh | bash`) and Claude Code (`curl -fsSL https://claude.ai/install.sh | bash`). Both end up in `~/.local/bin`.
-
 ### Connect from the app
 
 **Settings → Where agents run** → **Your server** → **SSH tunnel**. The addresses fill in as `http://127.0.0.1:<port>`; keep the default ports. Enter the **SSH host**, user and private key, tap **Test SSH**, then **Save Server & Security Settings** and **Reopen Now**. The app connects over SSH, opens the tunnels and starts the bridge. See [Where agents run](../06-settings/04-where-agents-run.md).
 
+### Install the agents from the app
+
+On each agent's page tap its install button: **Settings → Antigravity → Account & CLI → Install agy**, **Settings → Claude Code → Account & CLI → Install Claude Code**, and so on. The app installs them on the server and sets them up for the bridge. See [Server mode](../05-power-features/02-server-mode.md#install-the-agents-on-the-server).
+
 ### Sign in and chat
 
-Sign in to the agents again (their sign-ins live on the server now), and start chatting.
+Sign in to the agents (their sign-ins live on the server now), and start chatting.
 :::
 
 ## Good to know
