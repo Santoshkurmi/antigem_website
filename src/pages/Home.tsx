@@ -34,7 +34,7 @@ import { reveal, useTitle } from '~/lib/reveal'
 import { shotSet, shotSrc, SHOT_H, SHOT_W } from '~/lib/screens'
 import { site } from '~/lib/site'
 import { themes } from '~/lib/theme'
-import { loadVersion, type VersionInfo } from '~/lib/version'
+import { loadVersion, newestRelease, type VersionInfo } from '~/lib/version'
 import '~/styles/home.css'
 
 /** A framed phone screenshot (the image already includes the phone). */
@@ -71,10 +71,11 @@ export default function Home() {
 /* ------------------------------------------------------------------ Hero */
 
 function Hero() {
-  // The badge shows the newest release (the beta when there is one). Until it loads, it just says "What's new".
+  // The badge shows the newest release: the beta only when it is newer (higher version_code) than the stable one.
+  // Until it loads, it just says "What's new".
   const [version, setVersion] = createSignal<VersionInfo>()
   onMount(() => loadVersion().then(setVersion))
-  const newest = () => version()?.beta?.version_name ?? version()?.version_name
+  const newest = () => newestRelease(version())
   return (
     <section class="hero">
       <div class="hero-bg" aria-hidden="true" />
