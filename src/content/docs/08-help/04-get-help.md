@@ -50,4 +50,4 @@ Open an issue on GitHub that says what you want to do and why (the problem, not 
 
 ## Contribute
 
-AntiGem is open source. Pull requests to the [app](https://github.com/santoshkurmi/antigem) and to [these docs](https://github.com/santoshkurmi/antigem-website) are welcome: every docs page has an **Edit this page on GitHub** link at the bottom. See [Build AntiGem from source](../10-developers/03-build-from-source.md).
+AntiGem is open source. Pull requests to the [app](https://github.com/santoshkurmi/antigem) and to [these docs](https://github.com/santoshkurmi/antigem_website) are welcome: every docs page has an **Edit this page on GitHub** link at the bottom. See [Build AntiGem from source](../10-developers/03-build-from-source.md).

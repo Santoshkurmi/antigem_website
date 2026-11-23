@@ -12,9 +12,9 @@ export const site = {
   pluginSdk: 'https://github.com/santoshkurmi/antigem/tree/standalone/extension_docs',
   video: 'https://github.com/user-attachments/assets/821731b9-9713-4988-b358-09dc62aef006',
   /** This website's own repository. */
-  websiteRepo: 'https://github.com/santoshkurmi/antigem-website',
+  websiteRepo: 'https://github.com/santoshkurmi/antigem_website',
   /** "Edit this page" links: this + the page's path inside src/content/docs. */
-  editDocs: 'https://github.com/santoshkurmi/antigem-website/edit/main/src/content/docs/',
+  editDocs: 'https://github.com/santoshkurmi/antigem_website/edit/main/src/content/docs/',
   /** The app's version and changelog, read in the browser for the "New version" badge. */
   versionJson: 'https://raw.githubusercontent.com/santoshkurmi/antigem/standalone/version.json',
   minAndroid: 'Android 7.0+',

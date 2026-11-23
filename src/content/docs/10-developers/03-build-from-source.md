@@ -61,5 +61,5 @@ See [How AntiGem works](../01-getting-started/03-how-it-works.md) for how the pa
 
 - **Bugs and ideas:** [GitHub issues](https://github.com/santoshkurmi/antigem/issues). See [Getting help and reporting bugs](../08-help/04-get-help.md).
 - **Code:** fork, make a branch, and open a pull request with what you changed and why.
-- **These docs:** every page has **Edit this page on GitHub** at the bottom; the docs live in the [website repository](https://github.com/santoshkurmi/antigem-website). See [Markdown guide](../13-writing-docs/01-markdown-guide.md).
+- **These docs:** every page has **Edit this page on GitHub** at the bottom; the docs live in the [website repository](https://github.com/santoshkurmi/antigem_website). See [Markdown guide](../13-writing-docs/01-markdown-guide.md).
 - **Talk first** about big changes in the [Discord](https://discord.gg/pJvvTDTc6G).

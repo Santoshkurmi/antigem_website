@@ -2,6 +2,17 @@
 
 The website of [AntiGem](https://github.com/santoshkurmi/antigem): home page, showcase, how it works, and the docs. Built with [SolidJS](https://solidjs.com) and Vite.
 
+## Help improve the docs
+
+The docs are new and still need work: some pages are thin, some screenshots are missing, and the app keeps changing. If you use AntiGem and want to help, contributions are very welcome:
+
+- **Add a guide** for something you figured out (a setup, a workflow, a fix for a problem), so the next person doesn't have to ask.
+- **Fix or update a page** that's wrong, unclear or out of date with the app.
+- **Add screenshots** where a picture helps: `pnpm shots` lists the ones pages already ask for.
+- **Simplify** text that's hard to follow.
+
+Every docs page has an **Edit this page on GitHub** link at the bottom, which is the quickest way to suggest a change. For bigger additions, fork this repository, add or edit pages in `src/content/docs/` (see [Writing docs](#writing-docs) below), and open a pull request. Not sure where something belongs? Ask in the [Discord](https://discord.gg/pJvvTDTc6G) or open an issue.
+
 ```bash
 pnpm install
 pnpm dev        # http://localhost:5173/antigem/
@@ -86,9 +97,14 @@ The "New vX is out" badge on the home page reads the app's `version.json` from t
 
 ## Deploying
 
-The site is built for `https://santoshkurmi.github.io/antigem/` (base path `/antigem/`). `pnpm build` writes a static site to `dist/`, with an `index.html` per page (so shared links open the right page and show the right preview) and a `404.html`.
+The site is published at **https://santoshkurmi.github.io/antigem/**, the GitHub Pages of the AntiGem app repository ([santoshkurmi/antigem](https://github.com/santoshkurmi/antigem)). Its source stays here: the app repository's **Website** workflow (`.github/workflows/website.yml` there) checks out this repository, runs `pnpm build` and deploys `dist/`. `pnpm build` writes a static site with an `index.html` per page (so shared links open the right page and show the right preview) and a `404.html`. The base path `/antigem/` and the address in `.env` already match.
 
-- **GitHub Pages from this repo:** publish `dist/` with a GitHub Actions workflow (Settings → Pages → Source: GitHub Actions). A repo named `antigem-website` is served at `/antigem-website/`, so build with `SITE_BASE=/antigem-website/` and set `VITE_SITE_URL` to match (or use a custom domain).
-- **Custom domain:** build with `SITE_BASE=/ pnpm build` and set `VITE_SITE_URL` in `.env` to the new address.
+**Publishing:** after you push changes here, open the app repository on GitHub and run **Actions → Website → Run workflow**. A minute or two later the site is updated.
+
+**One-time setup:** in the app repository, **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+This repository must stay public, so the app repository's workflow can check it out without a token.
+
+**Another address:** to serve the site somewhere else (a custom domain, or another repository's Pages), build with `SITE_BASE=/` (or `/<repo>/`) and set `VITE_SITE_URL` in `.env` to the new address.
 
 `public/google64cb7fc0d9f55b2e.html` is the Google Search Console verification file from the old site, kept so the verification still works.
