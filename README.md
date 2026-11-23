@@ -7,6 +7,8 @@ pnpm install
 pnpm dev        # http://localhost:5173/antigem/
 pnpm build      # static site in dist/
 pnpm preview    # serve dist/ to check the build
+pnpm images     # small copies of new screenshots in media/screens/
+pnpm shots      # list the screenshots the docs ask for that don't exist yet
 ```
 
 ## Where things are
@@ -51,11 +53,11 @@ draft: true             # optional, shows a "Draft" badge
 
 Put a value in quotes if it contains `: `.
 
-On top of normal Markdown you get callouts (`> [!TIP]`), numbered steps (`:::steps`), screenshots (`![Caption](/screens/name.webp "phone")`), galleries, cards, fold-outs and highlighted code with a copy button. The full guide, with examples, is a docs page: run `pnpm dev` and open **Docs → Writing these docs → Markdown guide** (`src/content/docs/07-writing-docs/01-markdown-guide.md`).
+On top of normal Markdown you get callouts (`> [!TIP]`), numbered steps (`:::steps`), screenshots (`![Caption](/screens/name.webp "phone")`), galleries, cards, fold-outs and highlighted code with a copy button. The full guide, with examples, is a docs page: run `pnpm dev` and open **Docs → Writing these docs → Markdown guide** (`src/content/docs/13-writing-docs/01-markdown-guide.md`).
 
-Need something Markdown can't do? Write the page as a `.tsx` Solid component instead. See `07-writing-docs/02-solid-pages.tsx`: front matter goes in a `/* --- … --- */` comment at the top, and `~/components/docs` has `Steps`, `Step`, `Shot`, `Callout`, `Gallery`, `Cards`, `Card` and `Code`.
+Need something Markdown can't do? Write the page as a `.tsx` Solid component instead. See `13-writing-docs/02-solid-pages.tsx`: front matter goes in a `/* --- … --- */` comment at the top, and `~/components/docs` has `Steps`, `Step`, `Shot`, `Callout`, `Gallery`, `Cards`, `Card` and `Code`.
 
-Most pages in `01-getting-started` to `06-help` are drafts (`draft: true`) with placeholder text: replace them with real content, then remove `draft: true`.
+`PLAN.md` is the plan for the whole docs: every page, what it covers and which app code it comes from, in phases. Pages still marked `draft: true` have placeholder text: write them from the plan, then remove `draft: true`.
 
 ## Screenshots
 
@@ -64,6 +66,8 @@ Most pages in `01-getting-started` to `06-help` are drafts (`draft: true`) with 
 3. Use it as `/screens/<name>.webp` in Markdown, or `<Shot src="<name>" />` in a `.tsx` page. The browser picks the size it needs.
 
 Use `"phone"` for screenshots that already have a phone frame (like the current ones) and `"frame"` for plain screen captures.
+
+**Screenshots that don't exist yet.** A page can ask for a screenshot before anyone has taken it: write it as usual, with a caption that says what to capture. The production build leaves a missing screenshot out completely (no broken image, no gap). `pnpm dev` shows a dashed "Screenshot needed" box instead, and a pill in the corner of docs pages hides them so you can see the page as readers will. Add the file to `media/screens/` and run `pnpm images`: the page picks it up without an edit. `pnpm shots` lists every missing one (`--md` for a checklist).
 
 ## Themes
 

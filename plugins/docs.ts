@@ -22,6 +22,8 @@ interface Page {
   label: string
   description: string
   draft: boolean
+  /** The app version the page was last checked against (front matter `updated:`). */
+  updated: string
   section: string
   headings: { depth: number; text: string; id: string }[]
 }
@@ -49,6 +51,8 @@ export default function docs(opts: { dir: string; routes?: { path: string; title
   let root = ''
   let pages: Page[] = []
   let sections: Section[] = []
+  /** Links to docs pages that don't exist, found while building: the build fails with the list. */
+  const brokenLinks = new Set<string>()
 
   const scan = () => {
     const files: string[] = []
@@ -105,6 +109,7 @@ export default function docs(opts: { dir: string; routes?: { path: string; title
         label: String(data.sidebar ?? title),
         description: String(data.description ?? ''),
         draft: !!data.draft,
+        updated: data.updated == null ? '' : String(data.updated),
         section: sectionSlug,
         headings,
       }
@@ -134,7 +139,17 @@ export default function docs(opts: { dir: string; routes?: { path: string; title
         const { file, rel, headings, ...meta } = p
         return `{...${JSON.stringify({ ...meta, path: rel, headings })}, load: () => import(${JSON.stringify(file)})}`
       })
-      return `export const sections = ${JSON.stringify(sections)};\nexport const pages = [\n${list.join(',\n')}\n];\n`
+      // The screenshots that exist (public/screens/480/<name>.webp), so <Shot> in .tsx pages can leave out the
+      // missing ones like the Markdown pages do.
+      const shotDir = join(config.publicDir, 'screens/480')
+      const screens = existsSync(shotDir)
+        ? readdirSync(shotDir).filter((f) => f.endsWith('.webp')).map((f) => f.slice(0, -5))
+        : []
+      return (
+        `export const sections = ${JSON.stringify(sections)};\n` +
+        `export const screens = new Set(${JSON.stringify(screens)});\n` +
+        `export const pages = [\n${list.join(',\n')}\n];\n`
+      )
     },
     async transform(code, id) {
       if (!id.endsWith('.md') || !id.startsWith(root)) return
@@ -149,8 +164,14 @@ export default function docs(opts: { dir: string; routes?: { path: string; title
         base: config.base,
         publicDir: config.publicDir,
         slugOf: (abs) => pages.find((p) => p.file === abs)?.slug,
+        dev: config.command === 'serve',
+        onBrokenLink: (href) => brokenLinks.add(`${relative(root, id)}: "${href}"`),
       })
       return { code: `export default ${JSON.stringify(html)};`, map: null }
+    },
+    buildEnd() {
+      if (config.command !== 'build' || !brokenLinks.size) return
+      this.error(`Links to docs pages that don't exist:\n  ${[...brokenLinks].sort().join('\n  ')}`)
     },
     configureServer(server) {
       const refresh = (file: string) => {
@@ -162,6 +183,23 @@ export default function docs(opts: { dir: string; routes?: { path: string; title
       }
       server.watcher.on('add', refresh)
       server.watcher.on('unlink', refresh)
+
+      // A screenshot added or removed (`pnpm images` writes public/screens/): render the pages again, so a
+      // placeholder turns into the picture (or back) without editing the page.
+      const screens = join(config.publicDir, 'screens')
+      server.watcher.add(screens)
+      let timer: ReturnType<typeof setTimeout> | undefined
+      const screensChanged = (file: string) => {
+        if (!file.startsWith(screens)) return
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          for (const mod of server.moduleGraph.idToModuleMap.values()) {
+            if (mod.id === RESOLVED || (mod.id?.endsWith('.md') && mod.id.startsWith(root))) server.moduleGraph.invalidateModule(mod)
+          }
+          server.ws.send({ type: 'full-reload' })
+        }, 300)
+      }
+      for (const ev of ['add', 'change', 'unlink'] as const) server.watcher.on(ev, screensChanged)
     },
     handleHotUpdate(ctx) {
       // A page's title, description or headings may have changed: rebuild the index too.

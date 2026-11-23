@@ -12,6 +12,10 @@
 //   :::details Question ... :::               a fold-out section
 //
 // Links to other docs can be written as files (`./claude-code.md`) or as URLs (`/docs/agents/claude-code`).
+//
+// Screenshots that don't exist yet are placeholders: in the production build they are left out completely (no
+// figure, no empty space; a step or gallery without pictures renders as if it never had one). In dev they show as
+// a dashed "Screenshot needed" box with the file name and caption; the docs page has a dev-only toggle to hide them.
 import { existsSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { Marked, type Token, type Tokens, type TokenizerAndRendererExtension } from 'marked'
@@ -34,7 +38,14 @@ export interface RenderContext {
   publicDir: string
   /** Absolute file path -> doc slug, for `.md` links. */
   slugOf: (absFile: string) => string | undefined
+  /** Dev server (placeholders for missing screenshots) or production build (missing screenshots left out). */
+  dev: boolean
+  /** Called for a link to a docs page that doesn't exist. */
+  onBrokenLink?: (href: string) => void
 }
+
+const CAMERA =
+  '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>'
 
 const LANGS = [
   'bash', 'shell', 'json', 'jsonc', 'yaml', 'toml', 'ini', 'ts', 'tsx', 'js', 'jsx', 'kotlin', 'go', 'python',
@@ -80,12 +91,13 @@ export async function renderMarkdown(src: string, ctx: RenderContext): Promise<{
   const { tokens, headings, md } = lex(src)
 
   // Image sizes (so the page doesn't jump while screenshots load) and screenshot size variants.
-  const images = new Map<string, { src: string; srcset?: string; width?: number; height?: number }>()
+  type ImageInfo = { src: string; srcset?: string; width?: number; height?: number; missing?: boolean }
+  const images = new Map<string, ImageInfo>()
   const jobs: Promise<void>[] = []
   md.walkTokens(tokens, (t) => {
     if (t.type !== 'image' || images.has(t.href)) return
     const href = t.href
-    const info: { src: string; srcset?: string; width?: number; height?: number } = { src: href }
+    const info: ImageInfo = { src: href }
     images.set(href, info)
     if (!href.startsWith('/')) return
     let file = join(ctx.publicDir, href)
@@ -98,7 +110,10 @@ export async function renderMarkdown(src: string, ctx: RenderContext): Promise<{
     } else {
       info.src = ctx.base + href.slice(1)
     }
-    if (!existsSync(file)) return
+    if (!existsSync(file)) {
+      info.missing = true
+      return
+    }
     if (!sizeCache.has(file)) sizeCache.set(file, sharp(file).metadata().then((m) => ({ width: m.width, height: m.height })).catch(() => ({})))
     jobs.push(sizeCache.get(file)!.then((s) => void Object.assign(info, s)))
   })
@@ -110,16 +125,34 @@ export async function renderMarkdown(src: string, ctx: RenderContext): Promise<{
     const [path, hash] = href.split('#')
     if (/\.(md|tsx)$/.test(path)) {
       const slug = ctx.slugOf(resolve(fileDir, path))
-      if (slug === undefined) console.warn(`[docs] ${ctx.file}: no doc for link "${href}"`)
+      if (slug === undefined) {
+        console.warn(`[docs] ${ctx.file}: no doc for link "${href}"`)
+        ctx.onBrokenLink?.(href)
+      }
       return `${ctx.base}docs/${slug ?? ''}${hash ? `#${hash}` : ''}`
     }
     if (href.startsWith('/')) return ctx.base + href.slice(1)
     return href
   }
 
+  const isMissing = (img: Tokens.Image | undefined) => !!img && !!images.get(img.href)?.missing
+  const shotName = (href: string) => /\/([\w.-]+?)(?:\.\w+)?$/.exec(href)?.[1] ?? href
+
+  /** A missing screenshot: a placeholder box in dev, nothing at all in the production build. */
+  const placeholder = (img: Tokens.Image, kind: string) => {
+    if (!ctx.dev) return ''
+    const cap = img.text ? `<span class="shot-ph-cap">${esc(img.text)}</span>` : ''
+    return (
+      `<figure class="fig ${kind} shot-ph" data-shot="${esc(shotName(img.href))}">` +
+      `<div class="shot-ph-box">${CAMERA}<strong>Screenshot needed</strong><code>${esc(shotName(img.href))}</code>${cap}</div>` +
+      `</figure>`
+    )
+  }
+
   const figure = (img: Tokens.Image) => {
     const info = images.get(img.href) ?? { src: img.href }
     const kind = img.title === 'phone' ? 'shot' : img.title === 'frame' ? 'shot framed' : 'wide'
+    if (info.missing) return placeholder(img, kind)
     const sizes = kind === 'wide' ? '(max-width: 760px) 100vw, 760px' : '(max-width: 600px) 70vw, 300px'
     const attrs = [
       `src="${esc(info.src)}"`,
@@ -147,19 +180,29 @@ export async function renderMarkdown(src: string, ctx: RenderContext): Promise<{
             else (steps.at(-1)?.body ?? intro).push(t)
           }
           const items = steps.map(({ head, body }) => {
-            const shots = body.filter(isShot)
+            // In the production build a missing screenshot isn't there at all, so the step lays out as text only.
+            const shots = body.filter(isShot).filter((t) => ctx.dev || !isMissing(soleImage(t)))
             const text = body.filter((t) => !isShot(t))
+            // Only placeholders: with placeholders hidden (dev toggle) the step goes back to the text-only layout.
+            const phOnly = shots.length > 0 && shots.every((t) => isMissing(soleImage(t)))
             const aside = shots.length ? `<div class="step-shots">${shots.map((t) => figure(soleImage(t)!)).join('')}</div>` : ''
-            return `<li class="step${shots.length ? ' has-shot' : ''}"><div class="step-text">${p.parse([head])}${p.parse(text)}</div>${aside}</li>`
+            const cls = `step${shots.length ? ' has-shot' : ''}${phOnly ? ' ph-only' : ''}`
+            return `<li class="${cls}"><div class="step-text">${p.parse([head])}${p.parse(text)}</div>${aside}</li>`
           })
           return `${p.parse(intro)}<ol class="steps">${items.join('')}</ol>`
         }
         case 'gallery': {
           const figs: string[] = []
+          let real = 0
           md.walkTokens(kids, (t) => {
-            if (t.type === 'image') figs.push(figure({ ...(t as Tokens.Image), title: 'phone' }))
+            if (t.type !== 'image') return
+            if (!isMissing(t as Tokens.Image)) real++
+            const fig = figure({ ...(t as Tokens.Image), title: 'phone' })
+            if (fig) figs.push(fig)
           })
-          return `<div class="gallery">${figs.join('')}</div>`
+          // No pictures left (production with all missing): no gallery at all.
+          if (!figs.length) return ''
+          return `<div class="gallery${real ? '' : ' ph-only'}">${figs.join('')}</div>`
         }
         case 'cards': {
           const list = kids.find((t) => t.type === 'list') as Tokens.List | undefined
@@ -212,6 +255,7 @@ export async function renderMarkdown(src: string, ctx: RenderContext): Promise<{
       },
       image(t) {
         const info = images.get(t.href) ?? { src: t.href }
+        if (info.missing) return ctx.dev ? `<span class="shot-ph-inline">📷 ${esc(shotName(t.href))}</span>` : ''
         return `<img src="${esc(info.src)}" alt="${esc(t.text)}" loading="lazy" decoding="async">`
       },
       link(t) {

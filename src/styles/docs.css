@@ -774,6 +774,109 @@
   }
 }
 
+/* Screenshot placeholders: dev only (the production build leaves missing screenshots out) */
+.prose .fig.shot-ph {
+  cursor: default;
+}
+.shot-ph-box {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 18px;
+  text-align: center;
+  color: var(--text-3);
+  border: 2px dashed var(--border-2);
+  border-radius: 18px;
+  background: repeating-linear-gradient(135deg, transparent 0 12px, var(--grid) 12px 24px);
+}
+.prose .fig.shot .shot-ph-box {
+  width: min(64vw, 280px);
+  aspect-ratio: 9 / 19;
+}
+.prose .fig.framed .shot-ph-box {
+  width: min(60vw, 260px);
+  border-radius: 28px;
+}
+.prose .fig.wide .shot-ph-box {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.prose .step-shots .fig.shot .shot-ph-box {
+  width: min(56vw, 230px);
+}
+@media (min-width: 760px) {
+  .prose .step-shots .fig.shot .shot-ph-box {
+    width: 210px;
+  }
+}
+.prose .gallery .fig.shot .shot-ph-box {
+  width: min(48vw, 210px);
+}
+.shot-ph-box strong {
+  font-size: 14px;
+  color: var(--text-2);
+}
+.shot-ph-box code {
+  font-size: 12px;
+  color: var(--accent);
+  word-break: break-all;
+}
+.shot-ph-cap {
+  max-width: 28ch;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.shot-ph-inline {
+  padding: 1px 8px;
+  font-size: 12px;
+  color: var(--text-3);
+  border: 1px dashed var(--border-2);
+  border-radius: 6px;
+}
+html.shot-ph-hidden .prose :where(.shot-ph, .shot-ph-inline, .gallery.ph-only) {
+  display: none;
+}
+html.shot-ph-hidden .prose .step.ph-only {
+  display: block;
+}
+html.shot-ph-hidden .prose .step.ph-only .step-shots {
+  display: none;
+}
+.ph-toggle {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font: 600 13px var(--font);
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+.ph-toggle .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.ph-toggle.off .dot {
+  background: var(--text-3);
+}
+.ph-toggle.none {
+  opacity: 0.55;
+}
+.doc-updated {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
 /* Gallery */
 .prose .gallery {
   display: flex;

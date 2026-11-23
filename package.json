@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "images": "node scripts/images.mjs",
+    "shots": "node scripts/shots.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

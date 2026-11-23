@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createResource, createSignal, For, on, onCleanup, Show, type Component } from 'solid-js'
+import { createEffect, createMemo, createResource, createSignal, For, lazy, on, onCleanup, Show, type Component } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 import { A, useLocation, useParams } from '@solidjs/router'
 import ArrowLeft from 'lucide-solid/icons/arrow-left'
@@ -14,6 +14,9 @@ interface TocItem {
   depth: number
 }
 
+// Dev only: the pill that shows or hides screenshot placeholders. Not in the production build.
+const PlaceholderToggle = import.meta.env.DEV ? lazy(() => import('./PlaceholderToggle')) : undefined
+
 export default function DocPage() {
   const params = useParams()
   const location = useLocation()
@@ -25,6 +28,7 @@ export default function DocPage() {
   const [mod] = createResource(page, (p) => p.load())
   const [toc, setToc] = createSignal<TocItem[]>([])
   const [activeId, setActiveId] = createSignal('')
+  const [phCount, setPhCount] = createSignal(0)
   let article: HTMLElement | undefined
 
   createEffect(() => {
@@ -40,6 +44,7 @@ export default function DocPage() {
         if (!article) return
         const hs = [...article.querySelectorAll<HTMLElement>('h2[id], h3[id]')]
         setToc(hs.map((h) => ({ id: h.id, text: (h.textContent ?? '').replace(/^#/, '').trim(), depth: h.tagName === 'H2' ? 2 : 3 })))
+        if (import.meta.env.DEV) setPhCount(article.querySelectorAll('.shot-ph, .shot-ph-inline').length)
         const hash = decodeURIComponent(location.hash.slice(1))
         if (hash) document.getElementById(hash)?.scrollIntoView()
         spy()
@@ -125,6 +130,9 @@ export default function DocPage() {
               <Show when={p().description}>
                 <p class="lead">{p().description}</p>
               </Show>
+              <Show when={p().updated}>
+                <p class="doc-updated">Checked with AntiGem {p().updated}</p>
+              </Show>
             </header>
 
             <Show when={toc().length > 1}>
@@ -181,6 +189,8 @@ export default function DocPage() {
               <Toc items={toc()} active={activeId()} />
             </Show>
           </aside>
+
+          {import.meta.env.DEV && PlaceholderToggle && <PlaceholderToggle count={phCount()} />}
         </div>
       )}
     </Show>

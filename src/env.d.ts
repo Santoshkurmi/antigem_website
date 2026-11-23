@@ -18,6 +18,8 @@ declare module 'virtual:docs' {
     label: string
     description: string
     draft: boolean
+    /** The app version the page was last checked against (front matter `updated:`), or ''. */
+    updated: string
     section: string
     headings: DocHeading[]
     load: () => Promise<{ default: string | Component }>
@@ -28,4 +30,6 @@ declare module 'virtual:docs' {
   }
   export const pages: DocPage[]
   export const sections: DocSection[]
+  /** Names of the screenshots that exist (public/screens/480/<name>.webp). */
+  export const screens: Set<string>
 }

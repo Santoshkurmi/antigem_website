@@ -4,8 +4,14 @@
 //   import { Steps, Step, Shot, Callout, Gallery, Cards, Card, Code } from '~/components/docs'
 import { For, Show, type JSX, type ParentProps } from 'solid-js'
 import { A } from '@solidjs/router'
+import { screens } from 'virtual:docs'
 import { shotSet, shotSrc, SHOT_H, SHOT_W } from '~/lib/screens'
 import { asset } from '~/lib/site'
+
+/** A screenshot name (not a path) whose file doesn't exist yet: a placeholder in dev, left out on the site. */
+const isMissing = (src: string) => !src.includes('/') && !src.includes('.') && !screens.has(src)
+/** Show this screenshot? Missing ones only in dev, as placeholders. */
+const showShot = (src: string | undefined) => !!src && (import.meta.env.DEV || !isMissing(src))
 
 const slugify = (s: string) =>
   s
@@ -17,6 +23,21 @@ const slugify = (s: string) =>
 /** A screenshot. `src` is a screenshot name from public/screens (like "agent_picker") or a path in public/. */
 export function Shot(p: { src: string; alt?: string; caption?: string; frame?: boolean }) {
   const isScreen = () => !p.src.includes('/') && !p.src.includes('.')
+  if (isMissing(p.src)) {
+    if (!import.meta.env.DEV) return null
+    const cap = p.caption ?? p.alt
+    return (
+      <figure class={`fig shot${p.frame ? ' framed' : ''} shot-ph`} data-shot={p.src}>
+        <div class="shot-ph-box">
+          <strong>Screenshot needed</strong>
+          <code>{p.src}</code>
+          <Show when={cap}>
+            <span class="shot-ph-cap">{cap}</span>
+          </Show>
+        </div>
+      </figure>
+    )
+  }
   return (
     <figure class={`fig shot${p.frame ? ' framed' : ''}`} data-zoom>
       <Show
@@ -46,13 +67,14 @@ export const Steps = (p: ParentProps) => <ol class="steps">{p.children}</ol>
 
 /** One step. `shot` shows a screenshot next to it (below it on phones). */
 export function Step(p: ParentProps<{ title: string; shot?: string; frame?: boolean; id?: string }>) {
+  const cls = () => (showShot(p.shot) ? `step has-shot${isMissing(p.shot!) ? ' ph-only' : ''}` : 'step')
   return (
-    <li class={p.shot ? 'step has-shot' : 'step'}>
+    <li class={cls()}>
       <div class="step-text">
         <h3 id={p.id ?? slugify(p.title)}>{p.title}</h3>
         {p.children}
       </div>
-      <Show when={p.shot}>
+      <Show when={showShot(p.shot)}>
         <div class="step-shots">
           <Shot src={p.shot!} alt={p.title} frame={p.frame} />
         </div>
@@ -75,11 +97,16 @@ export function Callout(p: ParentProps<{ type?: keyof typeof LABELS; title?: str
 }
 
 /** A swipeable row of screenshots. */
-export const Gallery = (p: { shots: { src: string; caption?: string }[] }) => (
-  <div class="gallery">
-    <For each={p.shots}>{(s) => <Shot src={s.src} caption={s.caption} />}</For>
-  </div>
-)
+export const Gallery = (p: { shots: { src: string; caption?: string }[] }) => {
+  const shown = () => p.shots.filter((s) => showShot(s.src))
+  return (
+    <Show when={shown().length}>
+      <div class={`gallery${shown().every((s) => isMissing(s.src)) ? ' ph-only' : ''}`}>
+        <For each={shown()}>{(s) => <Shot src={s.src} caption={s.caption} />}</For>
+      </div>
+    </Show>
+  )
+}
 
 export const Cards = (p: ParentProps) => <div class="cards">{p.children}</div>
 
