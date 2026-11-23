@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" data-theme="midnight" data-scheme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>AntiGem · AI coding agents, a Linux terminal and an IDE on your Android phone</title>
+    <meta name="description" content="AntiGem runs Antigravity, Claude Code, OpenCode and Codex on Android, with a real Linux terminal, a code editor and a browser the agent can control. Free and open source." />
+    <meta name="theme-color" content="#07080c" />
+    <link rel="canonical" href="https://santoshkurmi.github.io/antigem/" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AntiGem" />
+    <meta property="og:url" content="https://santoshkurmi.github.io/antigem/" />
+    <meta property="og:title" content="AntiGem · AI coding agents on your Android phone" />
+    <meta property="og:description" content="AntiGem runs Antigravity, Claude Code, OpenCode and Codex on Android, with a real Linux terminal, a code editor and a browser the agent can control. Free and open source." />
+    <meta property="og:image" content="https://santoshkurmi.github.io/antigem/og.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "AntiGem",
+        "operatingSystem": "Android 7.0+",
+        "applicationCategory": "DeveloperApplication",
+        "description": "An AI coding workspace for Android: Antigravity, Claude Code, OpenCode and Codex agents, a real Linux terminal, a code editor and a browser the agent can control.",
+        "url": "https://santoshkurmi.github.io/antigem/",
+        "downloadUrl": "https://github.com/santoshkurmi/antigem/releases",
+        "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+
+    <!-- Pick the saved theme before the first paint, so the page never flashes the wrong colors. -->
+    <script>
+      ;(function () {
+        var kinds = { midnight: 'dark', daylight: 'light', amoled: 'dark', nebula: 'dark', aurora: 'dark', sand: 'light' }
+        var t = 'system'
+        try { t = localStorage.getItem('ag-theme') || 'system' } catch (e) {}
+        var dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches
+        var name = t === 'system' || !kinds[t] ? (dark ? 'midnight' : 'daylight') : t
+        var el = document.documentElement
+        el.setAttribute('data-theme', name)
+        el.setAttribute('data-scheme', kinds[name])
+      })()
+    </script>
+  </head>
+  <body>
+    <noscript>AntiGem's website needs JavaScript. You can also read the project on <a href="https://github.com/santoshkurmi/antigem">GitHub</a>.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>

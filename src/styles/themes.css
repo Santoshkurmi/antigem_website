@@ -1,0 +1,174 @@
+/* Color themes. Each one sets the same variables; components only use the variables.
+   To add a theme: copy a block here, then add it to src/lib/theme.ts and to the script in index.html. */
+
+:root {
+  --font: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --header-h: 64px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  /* The seam of the AntiGem gem icon. */
+  --prism: linear-gradient(90deg, #5ee7ff, #ffffff 38%, #c79bff 66%, #ffb86b);
+}
+
+[data-theme='midnight'] {
+  color-scheme: dark;
+  --bg: #07080c;
+  --bg-2: #0a0c12;
+  --surface: #0f1219;
+  --surface-2: #151923;
+  --surface-3: #1c2130;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-2: rgba(255, 255, 255, 0.13);
+  --text: #eef1f7;
+  --text-2: #a4acbe;
+  --text-3: #6c7487;
+  --accent: #5ee7ff;
+  --accent-2: #c79bff;
+  --accent-3: #ffb86b;
+  --on-accent: #03141a;
+  --glow-1: rgba(94, 231, 255, 0.15);
+  --glow-2: rgba(199, 155, 255, 0.14);
+  --glow-3: rgba(255, 184, 107, 0.07);
+  --grid: rgba(255, 255, 255, 0.035);
+  --shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.8);
+  --header-bg: rgba(7, 8, 12, 0.88);
+  --code-bg: #0b0e15;
+  --selection: rgba(94, 231, 255, 0.28);
+}
+
+[data-theme='amoled'] {
+  color-scheme: dark;
+  --bg: #000000;
+  --bg-2: #050505;
+  --surface: #0b0b0c;
+  --surface-2: #121214;
+  --surface-3: #1a1a1d;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-2: rgba(255, 255, 255, 0.15);
+  --text: #f4f4f5;
+  --text-2: #a1a1aa;
+  --text-3: #6b6b74;
+  --accent: #5ee7ff;
+  --accent-2: #c79bff;
+  --accent-3: #ffb86b;
+  --on-accent: #001318;
+  --glow-1: rgba(94, 231, 255, 0.1);
+  --glow-2: rgba(255, 184, 107, 0.07);
+  --glow-3: rgba(199, 155, 255, 0.06);
+  --grid: rgba(255, 255, 255, 0.04);
+  --shadow: 0 24px 60px -24px rgba(0, 0, 0, 1);
+  --header-bg: rgba(0, 0, 0, 0.9);
+  --code-bg: #08080a;
+  --selection: rgba(94, 231, 255, 0.3);
+}
+
+[data-theme='nebula'] {
+  color-scheme: dark;
+  --bg: #0b0716;
+  --bg-2: #0f0a1d;
+  --surface: #140d25;
+  --surface-2: #1b1331;
+  --surface-3: #241a40;
+  --border: rgba(225, 205, 255, 0.08);
+  --border-2: rgba(225, 205, 255, 0.15);
+  --text: #f2edfb;
+  --text-2: #b5a9cd;
+  --text-3: #7e7298;
+  --accent: #c79bff;
+  --accent-2: #ff8fd8;
+  --accent-3: #5ee7ff;
+  --on-accent: #1a0b2e;
+  --glow-1: rgba(199, 155, 255, 0.18);
+  --glow-2: rgba(255, 143, 216, 0.12);
+  --glow-3: rgba(94, 231, 255, 0.07);
+  --grid: rgba(225, 205, 255, 0.04);
+  --shadow: 0 24px 60px -24px rgba(5, 0, 15, 0.85);
+  --header-bg: rgba(11, 7, 22, 0.88);
+  --code-bg: #0e0919;
+  --selection: rgba(199, 155, 255, 0.3);
+}
+
+[data-theme='aurora'] {
+  color-scheme: dark;
+  --bg: #05110f;
+  --bg-2: #071613;
+  --surface: #0a1c18;
+  --surface-2: #0f2520;
+  --surface-3: #15302a;
+  --border: rgba(200, 255, 235, 0.07);
+  --border-2: rgba(200, 255, 235, 0.14);
+  --text: #e9f7f2;
+  --text-2: #9fbcb2;
+  --text-3: #66857b;
+  --accent: #4ff0b4;
+  --accent-2: #5ee7ff;
+  --accent-3: #f5d76e;
+  --on-accent: #02140d;
+  --glow-1: rgba(79, 240, 180, 0.14);
+  --glow-2: rgba(94, 231, 255, 0.11);
+  --glow-3: rgba(245, 215, 110, 0.06);
+  --grid: rgba(200, 255, 235, 0.035);
+  --shadow: 0 24px 60px -24px rgba(0, 10, 6, 0.85);
+  --header-bg: rgba(5, 17, 15, 0.88);
+  --code-bg: #071512;
+  --selection: rgba(79, 240, 180, 0.28);
+}
+
+[data-theme='daylight'] {
+  color-scheme: light;
+  --bg: #f7f8fb;
+  --bg-2: #eff1f6;
+  --surface: #ffffff;
+  --surface-2: #f3f5f9;
+  --surface-3: #e8ebf2;
+  --border: rgba(16, 24, 40, 0.08);
+  --border-2: rgba(16, 24, 40, 0.15);
+  --text: #0c1020;
+  --text-2: #4b5468;
+  --text-3: #808aa0;
+  --accent: #0a84c6;
+  --accent-2: #7c4dff;
+  --accent-3: #e8710a;
+  --on-accent: #ffffff;
+  --glow-1: rgba(10, 132, 198, 0.13);
+  --glow-2: rgba(124, 77, 255, 0.1);
+  --glow-3: rgba(232, 113, 10, 0.07);
+  --grid: rgba(16, 24, 40, 0.05);
+  --shadow: 0 24px 50px -24px rgba(16, 24, 40, 0.25);
+  --header-bg: rgba(247, 248, 251, 0.9);
+  --code-bg: #f6f8fa;
+  --selection: rgba(10, 132, 198, 0.2);
+}
+
+[data-theme='sand'] {
+  color-scheme: light;
+  --bg: #f6f1e8;
+  --bg-2: #efe8db;
+  --surface: #fffcf6;
+  --surface-2: #f4eee2;
+  --surface-3: #eae1d0;
+  --border: rgba(60, 40, 10, 0.1);
+  --border-2: rgba(60, 40, 10, 0.18);
+  --text: #2a2118;
+  --text-2: #65584a;
+  --text-3: #9a8c7c;
+  --accent: #c2410c;
+  --accent-2: #0f766e;
+  --accent-3: #a16207;
+  --on-accent: #ffffff;
+  --glow-1: rgba(194, 65, 12, 0.11);
+  --glow-2: rgba(15, 118, 110, 0.09);
+  --glow-3: rgba(161, 98, 7, 0.07);
+  --grid: rgba(60, 40, 10, 0.05);
+  --shadow: 0 24px 50px -24px rgba(60, 40, 10, 0.28);
+  --header-bg: rgba(246, 241, 232, 0.9);
+  --code-bg: #f8f3ea;
+  --selection: rgba(194, 65, 12, 0.18);
+}
+
+[data-theme] {
+  --grad: linear-gradient(100deg, var(--accent) 0%, var(--accent-2) 55%, var(--accent-3) 100%);
+}
